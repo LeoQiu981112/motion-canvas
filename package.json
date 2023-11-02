@@ -52,5 +52,8 @@
   "lint-staged": {
     "*.{ts,tsx}": "eslint --fix",
     "*.{js,jsx,ts,tsx,md,scss}": "prettier --write"
+  },
+  "dependencies": {
+    "ra": "^0.9.7"
   }
 }

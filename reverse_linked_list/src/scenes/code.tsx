@@ -1,34 +1,27 @@
-import { makeScene2D } from '@motion-canvas/2d/lib/scenes';
-import { createRef } from '@motion-canvas/core/lib/utils';
-import { all, waitFor } from '@motion-canvas/core/lib/flow';
-
-import {
-    CodeBlock,
-    edit,
-    insert,
-    lines,
-    remove,
-} from '@motion-canvas/2d/lib/components/CodeBlock';
+import {makeScene2D, Rect} from '@motion-canvas/2d';
+import {all, waitFor, makeRef, range} from '@motion-canvas/core';
 
 export default makeScene2D(function* (view) {
-    const codeRef = createRef<CodeBlock>();
+  const rects: Rect[] = [];
 
-    yield view.add(<CodeBlock ref={codeRef} code={`var myBool;`} />);
+  // Create some rects
+  view.add(
+    range(5).map(i => (
+      <Rect
+        ref={makeRef(rects, i)}
+        width={100}
+        height={100}
+        x={-250 + 125 * i}
+        fill="#88C0D0"
+        radius={10}
+      />
+    )),
+  );
 
-    yield* codeRef().edit(1.2, false)`var myBool${insert(' = true')};`;
-    yield* waitFor(0.6);
-    yield* codeRef().edit(1.2)`var myBool = ${edit('true', 'false')};`;
-    yield* waitFor(0.6);
-    yield* all(
-        codeRef().selection(lines(0, Infinity), 1.2),
-        codeRef().edit(1.2, false)`var my${edit('Bool', 'Number')} = ${edit(
-            'false',
-            '42',
-        )};`,
-    );
-    yield* waitFor(0.6);
-    yield* codeRef().edit(1.2, false)`var myNumber${remove(' = 42')};`;
-    yield* waitFor(0.6);
-    yield* codeRef().edit(1.2, false)`var my${edit('Number', 'Bool')};`;
-    yield* waitFor(0.6);
-}); 
+  yield* waitFor(1);
+
+  // Animate them
+  yield* all(
+    ...rects.map(rect => rect.position.y(100, 1).to(-100, 2).to(0, 1)),
+  );
+});
