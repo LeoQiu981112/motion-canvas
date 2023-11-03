@@ -1,5 +1,14 @@
 {
   "version": 0,
-  "timeEvents": [],
+  "timeEvents": [
+    {
+      "name": "define_str",
+      "targetTime": 0.6315608164599454
+    },
+    {
+      "name": "end",
+      "targetTime": 1.5284201698775601
+    }
+  ],
   "seed": 3589295712
 }

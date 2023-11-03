@@ -137,34 +137,12 @@ export default makeScene2D(function* (view) {
     );
 
     yield* slideTransition(Direction.Bottom, 0.4);
-    yield* waitUntil('define_str');
-//     yield* code().selection(lines(1), 0.3);
-//     yield* code().edit(0.8)`fn main() {
-//     ${insert(`let hello = "Hello";`)}
-// };`;
+    yield* waitUntil('what');
+
     // zooming in on code
     yield* scale(2, 0.8);
-//     yield* waitUntil('type_str');
-//     yield* code().selection(lines(-1), 0.3)
-//     yield* code().edit(1.2, true)`fn main() {
-//     let hello${insert(`: &Str`)} = "Hello";
-// };`;
+    yield* waitUntil('test');
+    yield* scale(0.7, 1);
+    yield* waitUntil("end");
 
-//     yield* waitUntil('memory_str')
-//     yield* all(previewOpacity(1, 0.5), strOpacity(1, 0.5))
-
-//     yield* waitUntil('define_string')
-//     yield* code().edit(1.2)`fn main() {
-//     let hello: &Str = "Hello";${insert(`
-//     let greeting = String::from(hello);`)}
-// };`;
-
-//     yield* waitUntil('memory_representation')
-//     yield* stringOpacity(1, 0.5)
-//     yield* waitFor(0.5)
-//     yield* all(code().selection(range(1, 24, 1, 25), 0.3), lineOpacity(1, 0.5))
-
-    yield* waitUntil("end")
-
-    // yield* waitFor(2)
 });
