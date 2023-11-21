@@ -117,6 +117,7 @@ export default makeScene2D(function* (view) {
     
     yield* waitUntil('type_str');
     yield* code().selection(lines(-1), 0.3)
+    
     yield* code().edit(1.2, true)`fn main() {
     let hello${insert(`: &Str`)} = "Hello";
 };`;

@@ -1,0 +1,30 @@
+{
+  "version": 0,
+  "timeEvents": [
+    {
+      "name": "define_str",
+      "targetTime": 1
+    },
+    {
+      "name": "type_str",
+      "targetTime": 2.1
+    },
+    {
+      "name": "memory_str",
+      "targetTime": 3.5999999999999996
+    },
+    {
+      "name": "define_string",
+      "targetTime": 4.1
+    },
+    {
+      "name": "memory_representation",
+      "targetTime": 5.3
+    },
+    {
+      "name": "end",
+      "targetTime": 6.8
+    }
+  ],
+  "seed": 865135103
+}

@@ -2,12 +2,24 @@
   "version": 0,
   "timeEvents": [
     {
-      "name": "define_str",
-      "targetTime": 0.6315608164599454
+      "name": "move circles",
+      "targetTime": 1.5
     },
     {
-      "name": "end",
-      "targetTime": 1.5284201698775601
+      "name": "move question down",
+      "targetTime": 3
+    },
+    {
+      "name": "remove questions",
+      "targetTime": 4
+    },
+    {
+      "name": "question mark",
+      "targetTime": 5
+    },
+    {
+      "name": "show techniques",
+      "targetTime": 6.2
     }
   ],
   "seed": 3589295712
