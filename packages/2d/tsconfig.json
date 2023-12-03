@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "jsx": "react",
     "outDir": "lib",
     "strict": true,
     "noImplicitOverride": true,
@@ -12,12 +13,16 @@
     "inlineSourceMap": true,
     "experimentalDecorators": true,
     "skipLibCheck": true,
-    "types": ["node"],
+    "types": [
+      "node"
+    ],
     "plugins": [
       {
         "transform": "@motion-canvas/internal/transformers/markdown-literals.js"
       }
     ]
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ]
 }

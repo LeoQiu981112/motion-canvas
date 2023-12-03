@@ -3,19 +3,23 @@
   "timeEvents": [
     {
       "name": "move circles",
-      "targetTime": 1.5
+      "targetTime": 0.4
     },
     {
       "name": "move question down",
-      "targetTime": 3
+      "targetTime": 1.9
     },
     {
-      "name": "remove questions",
-      "targetTime": 4
+      "name": "remove q, show techniques",
+      "targetTime": 2.9
     },
     {
-      "name": "show techniques",
-      "targetTime": 5
+      "name": "prep scene for d n",
+      "targetTime": 4.699999999999999
+    },
+    {
+      "name": "add dummy node and text",
+      "targetTime": 5.199999999999999
     }
   ],
   "seed": 3589295712
