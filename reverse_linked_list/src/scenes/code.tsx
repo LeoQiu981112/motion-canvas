@@ -12,9 +12,8 @@ import { Tab } from '../../../packages/ui/src/components/tabs/Tabs';
 import * as Code from '../code_files/code_to_add';
 import { borderHighlight } from '../../../packages/ui/src/components/animations/borderHighlight';
 import { Color } from 'chroma-js';
-import {   PlopSpring,SmoothSpring,spring, } from '../../../packages/core/src/tweening';
+import {   PlopSpring,SmoothSpring,spring, } from '@motion-canvas/core/src/tweening';
 import { formatDuration } from '../../../packages/ui/src/utils/formatDuration';
-import question_mark from '../images/question_mark.png';
 import q1 from '../images/problem1.png';
 import q2 from '../images/problem2.png';
 
@@ -128,9 +127,9 @@ export default makeScene2D(function* (view) {
         </Layout>
     );
 
-    yield* fadeTransition(1)
+    yield* fadeTransition(0.1)
 
-    yield* waitFor(0.5)
+    yield* waitFor(2)
     const headRef= createRef<Txt>();
 
     const head = 
@@ -215,42 +214,26 @@ export default makeScene2D(function* (view) {
     // yield* all(...moveCirc);
 
     yield* waitUntil('move question down')
-    yield* layoutref().y(-1200,1)
+    yield* layoutref().y(-1200,0.5)
 
     // quickly talk about constraint 
     yield* waitUntil('remove questions')
     // move problem1 and 2 out at the same time
-    yield* all(layoutref().x(-2000,1))
+    yield* all(layoutref().x(-2000,0.5))
 
     // yield* core_layout_ref().x(-1200, 1)
 
     yield* problem1().remove()
     yield* problem2().remove()
-
-
-
-    yield* waitUntil('question mark')
     
-    const qmarkRef = createRef<Img>();
-    const problem3 = createRef<Img>();
-
-    core_layout.add(<Img ref={qmarkRef} src={question_mark}  opacity={0} size={1600} />);
-
-    yield* all(
-      qmarkRef().opacity(1,0.5).to(0,0.2),
-      qmarkRef().absoluteRotation(0, 0.2).to(360, 0.2).to(0, 0.2)
-    )
-    qmarkRef().remove()
-    // yield* all(previewOpacity(1, 0.5), strOpacity(1, 0.5))
-
-    // yield* stringOpacity(1, 0.5)
-    yield* waitFor(0.5)
-    yield* waitUntil('show techniques')
-    // create text "Linked List"
     const linkedListRef = createRef<CodeBlock>();
     let text = "Linked List\n\n traversal\n\n Dummy head\n\n Two pointer\n\n In place revsersal\n";
     const linkedList = <CodeBlock ref={linkedListRef} fontFamily={'JetBrains Mono'} fontSize={96} fill={'white'} position={{ x: -1200, y: -1600 }} >{text}</CodeBlock>
     core_layout.add(linkedList)
+
+    yield* waitUntil('show techniques')
+    // create text "Linked List"
+
     // move linkedlist down
     yield* linkedListRef().y(-300,1)
 

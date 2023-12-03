@@ -14,12 +14,8 @@
       "targetTime": 4
     },
     {
-      "name": "question mark",
-      "targetTime": 5
-    },
-    {
       "name": "show techniques",
-      "targetTime": 6.2
+      "targetTime": 5
     }
   ],
   "seed": 3589295712
