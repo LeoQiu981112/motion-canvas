@@ -27,8 +27,8 @@ import { fillRect } from '../../../packages/2d/src/utils/CanvasUtils';
 // eventually maybe for specific ds and algos
 
 export default makeScene2D(function* (view) {
+  const box = new BBox(0,0,100,100)
   // const scale = 75;
-  const core_scale = createSignal(1);
   const code = createRef<CodeBlock>();
   const code_layout = createRef<Layout>();
   const preview = createRef<Node>();
@@ -60,7 +60,7 @@ export default makeScene2D(function* (view) {
   const layoutY = -100
 
 
-  const layout_scale = createSignal(1);
+  const core_scale = createSignal(1);
 
   const core_layout_ref = createRef<Layout>();
   const core_layout =
@@ -72,69 +72,69 @@ export default makeScene2D(function* (view) {
 
   view.add(core_layout)
 
-  core_layout.add(
-    <Node x={400} ref={preview} opacity={() => previewOpacity()}>
-      <Line
-        points={() => {
-          if (index() == -1) return [[0, 0], [0, 0]];
-          let x = stringArray().getIndexBox(0).position().x;
-          let i = Math.round(index());
-          useLogger().info(i + " " + index().toFixed(2))
-          let newPos = strArray().getIndexBox(i + 1);
+  // core_layout.add(
+  //   <Node x={400} ref={preview} opacity={() => previewOpacity()}>
+  //     <Line
+  //       points={() => {
+  //         if (index() == -1) return [[0, 0], [0, 0]];
+  //         let x = stringArray().getIndexBox(0).position().x;
+  //         let i = Math.round(index());
+  //         useLogger().info(i + " " + index().toFixed(2))
+  //         let newPos = strArray().getIndexBox(i + 1);
 
-          return [
-            [x, stringArray().getIndexBox(i).position().y + 60],
-            [newPos.position().x, strArray().position().y - 60],
-          ]
-        }}
-        opacity={() => lineOpacity()}
-        lineWidth={8}
-        arrowSize={20}
-        stroke={Colors.surfaceLight}
-      />
-      <Array
-        ref={stringArray}
-        opacity={() => stringOpacity()}
-        name="hello"
-        suffix="String"
-        suffixColor={Colors.red}
-        values={() => {
-          return { ptr: `*${index() == -1 ? "?" : Math.round(index())}`, len: `${stringLiteral.length}`, cap: '5' }
-        }}
-        highlightIndexes={[0]}
-        quoteChars={Quote.none}
-        invertColors={true}
-      />
+  //         return [
+  //           [x, stringArray().getIndexBox(i).position().y + 60],
+  //           [newPos.position().x, strArray().position().y - 60],
+  //         ]
+  //       }}
+  //       opacity={() => lineOpacity()}
+  //       lineWidth={8}
+  //       arrowSize={20}
+  //       stroke={Colors.surfaceLight}
+  //     />
+  //     <Array
+  //       ref={stringArray}
+  //       opacity={() => stringOpacity()}
+  //       name="hello"
+  //       suffix="String"
+  //       suffixColor={Colors.red}
+  //       values={() => {
+  //         return { ptr: `*${index() == -1 ? "?" : Math.round(index())}`, len: `${stringLiteral.length}`, cap: '5' }
+  //       }}
+  //       highlightIndexes={[0]}
+  //       quoteChars={Quote.none}
+  //       invertColors={true}
+  //     />
 
-      <Array
-        ref={strArray}
-        name="hello"
-        suffix="&str"
-        suffixColor={Colors.FUNCTION}
-        opacity={() => strOpacity()}
-        y={() => 200 * stringOpacity()}
-        x={80}
-        values={() => stringLiteral()}
-        nameAlignment={{ x: xAlign.left, y: yAlign.bottom }}
-        invertColors={true}
-        highlightIndexes={[1]}
-      />
-    </Node>
-  );
+  //     <Array
+  //       ref={strArray}
+  //       name="hello"
+  //       suffix="&str"
+  //       suffixColor={Colors.FUNCTION}
+  //       opacity={() => strOpacity()}
+  //       y={() => 200 * stringOpacity()}
+  //       x={80}
+  //       values={() => stringLiteral()}
+  //       nameAlignment={{ x: xAlign.left, y: yAlign.bottom }}
+  //       invertColors={true}
+  //       highlightIndexes={[1]}
+  //     />
+  //   </Node>
+  // );
 
-    yield* fadeTransition(0.1)
+    // yield* fadeTransition(0.1)
 
-    yield* waitFor(2)
   // const headRef= createRef<Txt>();
   const problem1 = createRef<Img>();
   const problem2 = createRef<Img>();
   const layoutref = createRef<Layout>();
+  const layout_scale = createSignal(2);
 
-  // create coordinate vector
+//   // rects and circs 
 
   const center_pos = { x: 0, y: 0 }
 
-  // from center, create remaining from given x y dispolacements and put into array
+//   // from center, create remaining from given x y dispolacements and put into array
   const displace_x = 900
   const displace_y = 700
   const top_left_pos = { x: center_pos.x - displace_x, y: center_pos.y - displace_y }
@@ -146,6 +146,61 @@ export default makeScene2D(function* (view) {
   const left_pos = { x: center_pos.x - displace_x, y: center_pos.y }
   const right_pos = { x: center_pos.x + displace_x, y: center_pos.y }
 
+
+//   // create 8 circle displacement around center with 8 points in total 
+  const circ_displace = 800
+  const circ_displace_x = circ_displace * Math.cos(2 * Math.PI / 8)
+  const circ_displace_y = circ_displace * Math.sin(2 * Math.PI / 8)
+  const c_center_pos = { x: 0, y: 0 }
+  const c_top_left_pos = { x: center_pos.x - circ_displace_x, y: center_pos.y - circ_displace_y }
+  const c_top_right_pos = { x: center_pos.x + circ_displace_x, y: center_pos.y - circ_displace_y }
+  const c_bottom_left_pos = { x: center_pos.x - circ_displace_x, y: center_pos.y + circ_displace_y }
+  const c_bottom_right_pos = { x: center_pos.x + circ_displace_x, y: center_pos.y + circ_displace_y }
+  const c_top_pos = { x: center_pos.x, y: center_pos.y - circ_displace }
+  const c_bottom_pos = { x: center_pos.x, y: center_pos.y + circ_displace }
+  const c_left_pos = { x: center_pos.x - circ_displace, y: center_pos.y }
+  const c_right_pos = { x: center_pos.x + circ_displace, y: center_pos.y }
+
+
+
+
+//   // put the above into an array
+//   const positions = [bottom_left_pos, top_left_pos, bottom_right_pos, top_right_pos, center_pos, top_pos, bottom_pos, left_pos, right_pos]
+//   // create square at each position
+//   const squares = []
+//   for (const pos of positions) {
+//     squares.push(
+//       <Rect
+//         width={50}
+//         height={50}
+//         x={pos.x}
+//         y={pos.y}
+//         fill="silver"
+//         opacity={0.5}
+//         radius={10}
+//       />
+//     )
+//   }
+//   core_layout.add(squares)
+
+
+// // create 8 circles using each of the circle positions
+//   const c_positions = [c_bottom_left_pos, c_top_left_pos, c_bottom_right_pos, c_top_right_pos, c_center_pos, c_top_pos, c_bottom_pos, c_left_pos, c_right_pos]   
+//   const circs1 = []
+//   for (const pos of c_positions) {
+//     circs1.push(
+//       <Circle
+//         width={100}
+//         height={100}
+//         x={pos.x}
+//         y={pos.y}
+//         stroke={'78909C'}
+//         fill={"#607D8B"}
+//       />
+//     )
+//   }
+//   core_layout.add(circs1)
+
   // create transition time map from very slow to very fast with keys being the name of the transition
   const speed_m = {
     'very slow': 1.5,
@@ -155,40 +210,33 @@ export default makeScene2D(function* (view) {
     'very fast': 0.20
   }
 
-
-
-
-  // put the above into an array
-  const positions = [bottom_left_pos, top_left_pos, bottom_right_pos, top_right_pos, center_pos, top_pos, bottom_pos, left_pos, right_pos]
-  // create square at each position
-  const squares = []
-  for (const pos of positions) {
-    squares.push(
-      <Rect
-        width={50}
-        height={50}
-        x={pos.x}
-        y={pos.y}
-        fill="silver"
-        opacity={0.5}
-        radius={10}
-      />
-    )
-  }
-  core_layout.add(squares)
-
-
-
+  // core_layout.add(
+  //   <Layout layout ref={layoutref} gap={10} padding={10} direction={"column"} position={[-800, 400]} scale={()=>layout_scale()}>
+  //     <Img ref={problem1} src={q1} opacity={0.8} />
+  //     <Img ref={problem2} src={q2} opacity={0.8} />
+  //   </Layout>
+  // );
+  const q1_scale = createSignal(1);
+  const q2_scale = createSignal(1);
   core_layout.add(
-    <Layout layout ref={layoutref} gap={10} padding={10} direction={"column"} position={[-800, 400]} scale={layout_scale()}>
-      <Img ref={problem1} src={q1} opacity={0.8} />
-      <Img ref={problem2} src={q2} opacity={0.8} />
+    <Layout layout ref={layoutref} gap={10} padding={10} direction={"column"} position={[bottom_pos.x,bottom_pos.y+3000]} scale={()=>layout_scale()}>
+      <Img ref={problem1} src={q1} opacity={0.2} scale={()=> q1_scale()}/>
+      <Img ref={problem2} src={q2} opacity={0.2} scale={()=> q2_scale()}/>
     </Layout>
   );
 
-  yield* fadeTransition(speed_m["very fast"])
+  // slowly scroll up and fade in the questions
+  yield* all(
+    layoutref().y(bottom_pos.y+700, speed_m["slow"]),
+    problem1().opacity(1, speed_m["fast"]),
+    // problem2().opacity(1, speed_m["fast"]),
+  )
 
-  yield* waitFor(speed_m["very fast"])
+
+  yield* waitUntil('fade in')
+
+
+  core_scale(3, 0.5)
   const headRef = createRef<Txt>();
 
   const head =
@@ -200,7 +248,6 @@ export default makeScene2D(function* (view) {
       opacity={0}
       position={{ x: -1550, y: -450 }}
     >Head</Txt>
-
 
 
   // circ stuff------------------------------------------------------------------------------
@@ -240,8 +287,6 @@ export default makeScene2D(function* (view) {
 
 
   // move circles------------------------------------------------------------------------------------
-  // 
-  yield* waitUntil('move circles')
   const circle_gap = 200
 
   const moveCirc = [];
@@ -259,18 +304,34 @@ export default makeScene2D(function* (view) {
     // No yield here, just store the generators.
     moveCirc.push(circ.position.y(50, 0.5).to(-50, 0.5).to(0, 0.5));
   }
+
+
+
+  yield* waitUntil('problem explanation')
+  yield* waitFor(1)
+
+  // add the circles to the layout
+  yield* waitUntil('add circles')
   yield* all(
-    head.x(right_pos.x, 1),
-    head.opacity(1, 1.5),
-    layout.opacity(1, 0.5),
+    head.x(right_pos.x, speed_m["fast"]),
+    head.opacity(1, speed_m["fast"]),
+    layout.opacity(1, speed_m["fast"]),
     ...spread)
 
 
-  // yield* all(...moveCirc);
-
   yield* waitUntil('move question down')
-  yield* layoutref().y(-1200, 1)
 
+  yield* layoutref().y(-800, 1)
+
+  // second example 
+  // yield* layoutref().y(-1200, 1)
+// 
+
+// input,output, return value
+// we are going to read through the problem and identify the keywords before we start coding,
+// or even start thinking about the solution
+
+  yield* waitFor(5)
 
   // techniques------------------------------------------------------------------------------------
   yield* waitUntil('remove q, show techniques')
@@ -462,7 +523,6 @@ export default makeScene2D(function* (view) {
   )
 
   // wait for 3 seconds
-  yield* waitFor(1)
 
 
   // revert to previous list state, and do the same for each technique 
